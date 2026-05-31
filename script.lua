@@ -292,8 +292,15 @@ local sellOn = createToggle("Auto Vender", 115)
 local attackOthers = createToggle("Eliminar Otras Bases", 150)
 local helpOthers = createToggle("Mejorar Otras Bases", 185)
 -- CRONÓMETRO
-local timerLabel = Instance.new("TextLabel", frame)
-timerLabel.Size = UDim2.new(1,0,0,25)
+local timerFrame = Instance.new("Frame", frame)
+timerFrame.Size = UDim2.new(0.7,0,0,32)
+timerFrame.Position = UDim2.new(0.15,0,1,-50)
+timerFrame.BackgroundColor3 = Color3.fromRGB(15,20,35)
+
+local timerCorner = Instance.new("UICorner")
+timerCorner.Parent = timerFrame
+local timerLabel = Instance.new("TextLabel", timerFrame)
+timerLabel.Size = UDim2.new(1,0,1,0)
 timerLabel.Position = UDim2.new(0,0,1,-35)
 timerLabel.BackgroundTransparency = 1
 timerLabel.Text = "Tiempo: 00:00:00"
