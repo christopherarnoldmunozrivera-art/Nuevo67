@@ -52,7 +52,7 @@ local myBase = getMyBase()
 local gui = Instance.new("ScreenGui", game.CoreGui)
 
 local frame = Instance.new("Frame", gui)
-frame.Size = UDim2.new(0,300,0,260)
+frame.Size = UDim2.new(0,300,0,360)
 frame.Position = UDim2.new(0.7,0,0.3,0)
 frame.BackgroundColor3 = Color3.fromRGB(8,10,20)
 frame.Active = true
@@ -111,7 +111,7 @@ end
 -- TITULO
 local title = Instance.new("TextLabel", frame)
 title.Size = UDim2.new(1,-30,0,35)
-title.Position = UDim2.new(0,15,0,8)
+title.Position = UDim2.new(0,15,0,5)
 title.Text = "◢ MUÑOZ NEXUS ◣"
 title.TextColor3 = Color3.fromRGB(0,220,255)
 title.BackgroundTransparency = 1
@@ -122,7 +122,7 @@ title.TextXAlignment = Enum.TextXAlignment.Left
 -- SUBTITULO
 local sub = Instance.new("TextLabel", frame)
 sub.Size = UDim2.new(1,-30,0,18)
-sub.Position = UDim2.new(0,15,0,34)
+sub.Position = UDim2.new(0,15,0,25)
 sub.Text = "Neural Automation System"
 sub.TextColor3 = Color3.fromRGB(150,170,255)
 sub.BackgroundTransparency = 1
@@ -133,7 +133,7 @@ sub.TextXAlignment = Enum.TextXAlignment.Left
 -- SEPARADOR PREMIUM
 local line = Instance.new("Frame", frame)
 line.Size = UDim2.new(1,-30,0,1)
-line.Position = UDim2.new(0,15,0,58)
+line.Position = UDim2.new(0,15,0,45)
 line.BackgroundColor3 = Color3.fromRGB(0,220,255)
 line.BorderSizePixel = 0
 
@@ -244,11 +244,11 @@ local function createToggle(name, y)
     return function() return state end
 end
 
-local autoBuild = createToggle("Auto Construir", 45)
-local upgradeOn = createToggle("Auto Mejorar", 80)
-local sellOn = createToggle("Auto Vender", 115)
-local attackOthers = createToggle("Eliminar Otras Bases", 150)
-local helpOthers = createToggle("Mejorar Otras Bases", 185)
+local autoBuild = createToggle("Auto Construir", 60)
+local upgradeOn = createToggle("Auto Mejorar", 100)
+local sellOn = createToggle("Auto Vender", 140)
+local attackOthers = createToggle("Eliminar Otras Bases", 180)
+local helpOthers = createToggle("Mejorar Otras Bases", 220)
 
 -- LOOP
 task.spawn(function()
