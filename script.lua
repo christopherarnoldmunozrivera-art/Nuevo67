@@ -325,53 +325,22 @@ local attackOthers = createToggle("Eliminar Otras Bases", 150)
 local helpOthers = createToggle("Mejorar Otras Bases", 185)
 -- MINI CRONOMETRO RAINBOW NEON
 local timerFrame = Instance.new("Frame", frame)
-timerFrame.Size = UDim2.new(0,145,0,28)
+timerFrame.Size = UDim2.new(0,110,0,22)
 timerFrame.Position = UDim2.new(0.5,-72,1,-36)
 timerFrame.BackgroundColor3 = Color3.fromRGB(8,10,20)
 timerFrame.BackgroundTransparency = 0.08
 Instance.new("UICorner", timerFrame).CornerRadius = UDim.new(0,9)
-
-local rainbowStroke = Instance.new("UIStroke", timerFrame)
-rainbowStroke.Thickness = 2
-
-task.spawn(function()
-	while true do
-		rainbowStroke.Color = Color3.fromRGB(255,0,0)
-		task.wait(0.2)
-
-		rainbowStroke.Color = Color3.fromRGB(255,255,0)
-		task.wait(0.2)
-
-		rainbowStroke.Color = Color3.fromRGB(0,255,0)
-		task.wait(0.2)
-
-		rainbowStroke.Color = Color3.fromRGB(0,255,255)
-		task.wait(0.2)
-
-		rainbowStroke.Color = Color3.fromRGB(0,100,255)
-		task.wait(0.2)
-
-		rainbowStroke.Color = Color3.fromRGB(255,0,255)
-		task.wait(0.2)
-	end
-end)
+local timerStrokeBorder = Instance.new("UIStroke", timerFrame)
+timerStrokeBorder.Thickness = 1.5
+timerStrokeBorder.Color = Color3.fromRGB(0,170,255)
 
 
-local rainbowGradient = Instance.new("UIGradient", rainbowStroke)
-rainbowGradient.Color = ColorSequence.new{
-    ColorSequenceKeypoint.new(0, Color3.fromRGB(255,0,0)),
-    ColorSequenceKeypoint.new(0.2, Color3.fromRGB(255,255,0)),
-    ColorSequenceKeypoint.new(0.4, Color3.fromRGB(0,255,0)),
-    ColorSequenceKeypoint.new(0.6, Color3.fromRGB(0,255,255)),
-    ColorSequenceKeypoint.new(0.8, Color3.fromRGB(0,100,255)),
-    ColorSequenceKeypoint.new(1, Color3.fromRGB(255,0,255))
-}
 
 local timerText = Instance.new("TextLabel", timerFrame)
 timerText.Size = UDim2.new(1,0,1,0)
 timerText.BackgroundTransparency = 1
 timerText.Font = Enum.Font.GothamBold
-timerText.TextSize = 13
+timerText.TextSize = 11
 timerText.Text = "✨ 00:00:00"
 timerText.TextColor3 = Color3.fromRGB(255,255,255)
 local timerStroke = Instance.new("UIStroke")
@@ -395,12 +364,6 @@ task.spawn(function()
 	end
 end)
 
-task.spawn(function()
-	while true do
-		rainbowGradient.Rotation += 2
-		task.wait(0.03)
-	end
-end)
 
 task.spawn(function()
 	while true do
@@ -462,3 +425,4 @@ task.spawn(function()
         end
     end
 end)
+
