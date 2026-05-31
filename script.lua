@@ -148,13 +148,8 @@ title.BackgroundTransparency = 1
 title.Font = Enum.Font.GothamBlack
 title.TextSize = 16
 title.TextXAlignment = Enum.TextXAlignment.Left
-local orb = Instance.new("Frame", frame)
-orb.Size = UDim2.new(0,8,0,8)
-orb.Position = UDim2.new(0,5,0,12)
-orb.BackgroundColor3 = Color3.fromRGB(0,255,255)
-orb.BackgroundTransparency = 0.2
 
-Instance.new("UICorner", orb).CornerRadius = UDim.new(1,0)
+
 
 task.spawn(function()
 	while true do
@@ -316,6 +311,12 @@ TweenService:Create(label, TweenInfo.new(0.2), {
 knob.BackgroundColor3 = state
     and Color3.fromRGB(0,255,255)
     or Color3.fromRGB(180,180,180)
+    end)
+
+    return function()
+        return state
+    end
+end
 
 local autoBuild = createToggle("Auto Construir", 45)
 local upgradeOn = createToggle("Auto Mejorar", 80)
