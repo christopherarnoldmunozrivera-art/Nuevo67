@@ -326,7 +326,7 @@ local helpOthers = createToggle("Mejorar Otras Bases", 185)
 -- MINI CRONOMETRO RAINBOW NEON
 local timerFrame = Instance.new("Frame", frame)
 timerFrame.Size = UDim2.new(0,110,0,22)
-timerFrame.Position = UDim2.new(0.5,-55,1,-35)
+timerFrame.Position = UDim2.new(0.5,-55,1,-33)
 timerFrame.BackgroundColor3 = Color3.fromRGB(18,22,40)
 timerFrame.BackgroundTransparency = 0.08
 Instance.new("UICorner", timerFrame).CornerRadius = UDim.new(0,9)
