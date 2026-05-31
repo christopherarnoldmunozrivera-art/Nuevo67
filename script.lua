@@ -342,6 +342,11 @@ timerText.Font = Enum.Font.GothamBold
 timerText.TextSize = 13
 timerText.Text = "✨ 00:00:00"
 timerText.TextColor3 = Color3.fromRGB(255,255,255)
+local timerStroke = Instance.new("UIStroke")
+timerStroke.Parent = timerText
+timerStroke.Thickness = 1
+timerStroke.Transparency = 0.4
+
 local startTime = tick()
 
 task.spawn(function()
