@@ -294,7 +294,7 @@ local helpOthers = createToggle("Mejorar Otras Bases", 185)
 -- MINI CRONOMETRO RAINBOW NEON
 local timerFrame = Instance.new("Frame", frame)
 timerFrame.Size = UDim2.new(0,145,0,28)
-timerFrame.Position = UDim2.new(0.5,-72,1,-34)
+timerFrame.Position = UDim2.new(0.5,-72,1,-45)
 timerFrame.BackgroundColor3 = Color3.fromRGB(8,10,20)
 timerFrame.BackgroundTransparency = 0.08
 Instance.new("UICorner", timerFrame).CornerRadius = UDim.new(0,9)
@@ -319,58 +319,53 @@ timerText.Font = Enum.Font.GothamBold
 timerText.TextSize = 13
 timerText.Text = "✨ 00:00:00"
 timerText.TextColor3 = Color3.fromRGB(255,255,255)
--- EFECTO RGB
-task.spawn(function()
-    while true do
-        TweenService:Create(rainbowGradient, TweenInfo.new(3, Enum.EasingStyle.Linear), {
-            Rotation = 360
-        }):Play()
-
-        TweenService:Create(rainbowStroke, TweenInfo.new(1), {
-            Thickness = 3
-        }):Play()
-
-        task.wait(1)
-
-        TweenService:Create(rainbowStroke, TweenInfo.new(1), {
-            Thickness = 2
-        }):Play()
-
-        task.wait(1)
-        rainbowGradient.Rotation = 0
-    end
-end)
-
--- TEXTO RGB CAMBIANTE
-task.spawn(function()
-    local hue = 0
-
-    while true do
-        hue = (hue + 0.01) % 1
-        timerText.TextColor3 = Color3.fromHSV(hue,1,1)
-        task.wait(0.03)
-    end
-end)
-
--- TIMER
 local startTime = tick()
 
 task.spawn(function()
-    while true do
-        task.wait(1)
+	while true do
+		local elapsed = math.floor(tick() - startTime)
 
-        local elapsed = math.floor(tick() - startTime)
+		local h = math.floor(elapsed / 3600)
+		local m = math.floor((elapsed % 3600) / 60)
+		local s = elapsed % 60
 
-        local h = math.floor(elapsed / 3600)
-        local m = math.floor((elapsed % 3600) / 60)
-        local s = elapsed % 60
+		timerText.Text = string.format("⏱ %02d:%02d:%02d", h, m, s)
 
-        timerText.Text = string.format(
-            "🌈 %02d:%02d:%02d",
-            h,m,s
-        )
-    end
+		task.wait(1)
+	end
 end)
+
+task.spawn(function()
+	while true do
+		rainbowGradient.Rotation += 2
+		task.wait(0.03)
+	end
+end)
+
+task.spawn(function()
+	while true do
+		TweenService:Create(timerText,TweenInfo.new(0.8),{
+			TextColor3 = Color3.fromRGB(0,255,255)
+		}):Play()
+		task.wait(0.8)
+
+		TweenService:Create(timerText,TweenInfo.new(0.8),{
+			TextColor3 = Color3.fromRGB(0,100,255)
+		}):Play()
+		task.wait(0.8)
+
+		TweenService:Create(timerText,TweenInfo.new(0.8),{
+			TextColor3 = Color3.fromRGB(180,0,255)
+		}):Play()
+		task.wait(0.8)
+
+		TweenService:Create(timerText,TweenInfo.new(0.8),{
+			TextColor3 = Color3.fromRGB(255,0,180)
+		}):Play()
+		task.wait(0.8)
+	end
+end)
+
 
 
 -- LOOP
