@@ -120,19 +120,28 @@ title.TextSize = 16
 title.TextXAlignment = Enum.TextXAlignment.Left
 task.spawn(function()
 	while true do
-		title.TextColor3 = Color3.fromRGB(0,255,255)
-		task.wait(0.15)
+		TweenService:Create(title,TweenInfo.new(0.8),{
+			TextColor3 = Color3.fromRGB(0,255,255)
+		}):Play()
+		task.wait(0.8)
 
-		title.TextColor3 = Color3.fromRGB(0,100,255)
-		task.wait(0.15)
+		TweenService:Create(title,TweenInfo.new(0.8),{
+			TextColor3 = Color3.fromRGB(0,100,255)
+		}):Play()
+		task.wait(0.8)
 
-		title.TextColor3 = Color3.fromRGB(180,0,255)
-		task.wait(0.15)
+		TweenService:Create(title,TweenInfo.new(0.8),{
+			TextColor3 = Color3.fromRGB(180,0,255)
+		}):Play()
+		task.wait(0.8)
 
-		title.TextColor3 = Color3.fromRGB(255,0,180)
-		task.wait(0.15)
+		TweenService:Create(title,TweenInfo.new(0.8),{
+			TextColor3 = Color3.fromRGB(255,0,180)
+		}):Play()
+		task.wait(0.8)
 	end
 end)
+
 
 
 -- SUBTEXTO
@@ -311,3 +320,4 @@ task.spawn(function()
         end
     end
 end)
+
