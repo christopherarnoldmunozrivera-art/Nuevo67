@@ -143,6 +143,12 @@ task.spawn(function()
 end)
 
 
+local titleStroke = Instance.new("UIStroke")
+titleStroke.Parent = title
+titleStroke.Thickness = 1.5
+titleStroke.Transparency = 0.3
+
+
 
 -- SUBTEXTO
 local sub = Instance.new("TextLabel", frame)
@@ -320,4 +326,3 @@ task.spawn(function()
         end
     end
 end)
-
