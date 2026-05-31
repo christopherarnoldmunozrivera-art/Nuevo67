@@ -294,13 +294,36 @@ local helpOthers = createToggle("Mejorar Otras Bases", 185)
 -- MINI CRONOMETRO RAINBOW NEON
 local timerFrame = Instance.new("Frame", frame)
 timerFrame.Size = UDim2.new(0,145,0,28)
-timerFrame.Position = UDim2.new(0.5,-72,1,-45)
+timerFrame.Position = UDim2.new(0.5,-72,1,-36)
 timerFrame.BackgroundColor3 = Color3.fromRGB(8,10,20)
 timerFrame.BackgroundTransparency = 0.08
 Instance.new("UICorner", timerFrame).CornerRadius = UDim.new(0,9)
 
 local rainbowStroke = Instance.new("UIStroke", timerFrame)
 rainbowStroke.Thickness = 2
+
+task.spawn(function()
+	while true do
+		rainbowStroke.Color = Color3.fromRGB(255,0,0)
+		task.wait(0.2)
+
+		rainbowStroke.Color = Color3.fromRGB(255,255,0)
+		task.wait(0.2)
+
+		rainbowStroke.Color = Color3.fromRGB(0,255,0)
+		task.wait(0.2)
+
+		rainbowStroke.Color = Color3.fromRGB(0,255,255)
+		task.wait(0.2)
+
+		rainbowStroke.Color = Color3.fromRGB(0,100,255)
+		task.wait(0.2)
+
+		rainbowStroke.Color = Color3.fromRGB(255,0,255)
+		task.wait(0.2)
+	end
+end)
+
 
 local rainbowGradient = Instance.new("UIGradient", rainbowStroke)
 rainbowGradient.Color = ColorSequence.new{
@@ -329,7 +352,7 @@ task.spawn(function()
 		local m = math.floor((elapsed % 3600) / 60)
 		local s = elapsed % 60
 
-		timerText.Text = string.format("⏱ %02d:%02d:%02d", h, m, s)
+		timerText.Text = string.format("✨ %02d:%02d:%02d", h, m, s)
 
 		task.wait(1)
 	end
