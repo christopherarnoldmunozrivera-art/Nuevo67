@@ -291,65 +291,35 @@ local upgradeOn = createToggle("Auto Mejorar", 80)
 local sellOn = createToggle("Auto Vender", 115)
 local attackOthers = createToggle("Eliminar Otras Bases", 150)
 local helpOthers = createToggle("Mejorar Otras Bases", 185)
--- CRONÓMETRO
+-- MINI CRONOMETRO RAINBOW NEON
 local timerFrame = Instance.new("Frame", frame)
-timerFrame.Size = UDim2.new(0.7,0,0,32)
-timerFrame.Position = UDim2.new(0.15,0,1,-50)
-timerFrame.BackgroundColor3 = Color3.fromRGB(15,20,35)
+timerFrame.Size = UDim2.new(0,145,0,28)
+timerFrame.Position = UDim2.new(0.5,-72,1,-34)
+timerFrame.BackgroundColor3 = Color3.fromRGB(8,10,20)
+timerFrame.BackgroundTransparency = 0.08
+Instance.new("UICorner", timerFrame).CornerRadius = UDim.new(0,9)
 
-local timerCorner = Instance.new("UICorner")
-timerCorner.Parent = timerFrame
-local timerLabel = Instance.new("TextLabel", timerFrame)
-timerLabel.Size = UDim2.new(1,0,1,0)
-timerLabel.Position = UDim2.new(0,0,1,-35)
-timerLabel.BackgroundTransparency = 1
-timerLabel.Text = "Tiempo: 00:00:00"
-timerLabel.Font = Enum.Font.GothamBold
-timerLabel.TextSize = 14
-timerLabel.TextColor3 = Color3.fromRGB(0,255,255)
+local rainbowStroke = Instance.new("UIStroke", timerFrame)
+rainbowStroke.Thickness = 2
 
-local startTime = tick()
+local rainbowGradient = Instance.new("UIGradient", rainbowStroke)
+rainbowGradient.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(255,0,0)),
+    ColorSequenceKeypoint.new(0.2, Color3.fromRGB(255,255,0)),
+    ColorSequenceKeypoint.new(0.4, Color3.fromRGB(0,255,0)),
+    ColorSequenceKeypoint.new(0.6, Color3.fromRGB(0,255,255)),
+    ColorSequenceKeypoint.new(0.8, Color3.fromRGB(0,100,255)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(255,0,255))
+}
 
-task.spawn(function()
-	while true do
-		local elapsed = math.floor(tick() - startTime)
+local timerText = Instance.new("TextLabel", timerFrame)
+timerText.Size = UDim2.new(1,0,1,0)
+timerText.BackgroundTransparency = 1
+timerText.Font = Enum.Font.GothamBold
+timerText.TextSize = 13
+timerText.Text = "✨ 00:00:00"
+timerText.TextColor3 = Color3.fromRGB(255,255,255)
 
-		local h = math.floor(elapsed / 3600)
-		local m = math.floor((elapsed % 3600) / 60)
-		local s = elapsed % 60
-
-		timerLabel.Text = string.format(
-			"Tiempo: %02d:%02d:%02d",
-			h,m,s
-		)
-
-		task.wait(1)
-	end
-end)
-
-task.spawn(function()
-	while true do
-		TweenService:Create(timerLabel,TweenInfo.new(0.8),{
-			TextColor3 = Color3.fromRGB(0,255,255)
-		}):Play()
-		task.wait(0.8)
-
-		TweenService:Create(timerLabel,TweenInfo.new(0.8),{
-			TextColor3 = Color3.fromRGB(0,100,255)
-		}):Play()
-		task.wait(0.8)
-
-		TweenService:Create(timerLabel,TweenInfo.new(0.8),{
-			TextColor3 = Color3.fromRGB(180,0,255)
-		}):Play()
-		task.wait(0.8)
-
-		TweenService:Create(timerLabel,TweenInfo.new(0.8),{
-			TextColor3 = Color3.fromRGB(255,0,180)
-		}):Play()
-		task.wait(0.8)
-	end
-end)
 
 -- LOOP
 task.spawn(function()
