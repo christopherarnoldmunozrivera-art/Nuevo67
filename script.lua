@@ -121,16 +121,16 @@ title.TextXAlignment = Enum.TextXAlignment.Left
 task.spawn(function()
 	while true do
 		title.TextColor3 = Color3.fromRGB(0,255,255)
-		task.wait(1)
+		task.wait(0.15)
 
 		title.TextColor3 = Color3.fromRGB(0,100,255)
-		task.wait(1)
+		task.wait(0.15)
 
 		title.TextColor3 = Color3.fromRGB(180,0,255)
-		task.wait(1)
+		task.wait(0.15)
 
 		title.TextColor3 = Color3.fromRGB(255,0,180)
-		task.wait(1)
+		task.wait(0.15)
 	end
 end)
 
@@ -241,6 +241,31 @@ local function createToggle(name, y)
         TweenService:Create(toggleBtn, TweenInfo.new(0.2), {
             BackgroundColor3 = state and Color3.fromRGB(0,170,255) or Color3.fromRGB(60,70,100)
         }):Play()
+if state then
+task.spawn(function()
+while state do
+knob.BackgroundColor3 = Color3.fromRGB(0,255,255)
+toggleBtn.BackgroundColor3 = Color3.fromRGB(0,255,255)
+task.wait(0.15)
+
+knob.BackgroundColor3 = Color3.fromRGB(0,100,255)
+toggleBtn.BackgroundColor3 = Color3.fromRGB(0,100,255)
+task.wait(0.15)
+
+knob.BackgroundColor3 = Color3.fromRGB(180,0,255)
+toggleBtn.BackgroundColor3 = Color3.fromRGB(180,0,255)
+task.wait(0.15)
+
+knob.BackgroundColor3 = Color3.fromRGB(255,0,180)
+toggleBtn.BackgroundColor3 = Color3.fromRGB(255,0,180)
+task.wait(0.15)
+end
+
+knob.BackgroundColor3 = Color3.fromRGB(0,200,255)
+toggleBtn.BackgroundColor3 = Color3.fromRGB(60,70,100)
+end)
+end
+
     end)
 
     return function() return state end
