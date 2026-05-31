@@ -1,7 +1,6 @@
 local player = game.Players.LocalPlayer
 local rs = game:GetService("ReplicatedStorage")
 local TweenService = game:GetService("TweenService")
-local RunService = game:GetService("RunService")
 
 local remoteUnit = rs.Remotes.Unit
 local remoteUpgrade = rs.Remotes.Upgrade
@@ -14,7 +13,6 @@ local old
 old = hookmetamethod(game, "__namecall", function(self, ...)
     local args = {...}
     local method = getnamecallmethod()
-
     if self == remoteUnit and method == "FireServer" then
         if args[1] == "buy" then
             local id = args[2]
@@ -25,11 +23,9 @@ old = hookmetamethod(game, "__namecall", function(self, ...)
     return old(self, ...)
 end)
 
--- BASE
 local function getMyBase()
     local char = player.Character or player.CharacterAdded:Wait()
     local root = char:WaitForChild("HumanoidRootPart")
-    
     local closest, dist = nil, math.huge
     for _, base in pairs(workspace.Bases:GetChildren()) do
         if base:FindFirstChild("Tiles") then
@@ -48,238 +44,169 @@ end
 
 local myBase = getMyBase()
 
--- ==================== GUI PREMIUM ====================
+-- ==================== GUI ====================
 local gui = Instance.new("ScreenGui", game.CoreGui)
 gui.ResetOnSpawn = false
 
 local frame = Instance.new("Frame", gui)
-frame.Size = UDim2.new(0, 320, 0, 280)
-frame.Position = UDim2.new(0.72, 0, 0.25, 0)
-frame.BackgroundColor3 = Color3.fromRGB(8, 10, 22)
+frame.Size = UDim2.new(0, 340, 0, 300)
+frame.Position = UDim2.new(0.72, 0, 0.22, 0)
+frame.BackgroundColor3 = Color3.fromRGB(10, 12, 28)
 frame.Active = true
 frame.Draggable = true
-frame.BorderSizePixel = 0
+Instance.new("UICorner", frame).CornerRadius = UDim.new(0, 18)
 
-Instance.new("UICorner", frame).CornerRadius = UDim.new(0, 16)
+-- Bordes
+local outerBorder = Instance.new("UIStroke", frame)
+outerBorder.Thickness = 4
+outerBorder.Color = Color3.fromRGB(0, 255, 180)
 
--- Glow + Shadow
-local glow = Instance.new("UIStroke", frame)
-glow.Thickness = 3
-glow.Transparency = 0.4
-glow.Color = Color3.fromRGB(0, 255, 255)
-
-local innerGlow = Instance.new("UIStroke", frame)
-innerGlow.Thickness = 1
-innerGlow.Transparency = 0.7
-innerGlow.Color = Color3.fromRGB(255, 255, 255)
-
--- Rainbow Border
-local rainbowStroke = Instance.new("UIStroke", frame)
-rainbowStroke.Thickness = 2.5
-rainbowStroke.Color = Color3.fromRGB(255, 0, 255)
+local rainbowBorder = Instance.new("UIStroke", frame)
+rainbowBorder.Thickness = 2
 
 task.spawn(function()
     local hue = 0
-    while task.wait() do
-        hue = (hue + 0.8) % 360
-        rainbowStroke.Color = Color3.fromHSV(hue/360, 1, 1)
+    while task.wait(0.025) do
+        hue = (hue + 2.5) % 360
+        rainbowBorder.Color = Color3.fromHSV(hue/360, 0.85, 1)
     end
 end)
 
--- Gradient Background
+-- Gradient
 local gradient = Instance.new("UIGradient", frame)
 gradient.Color = ColorSequence.new{
-    ColorSequenceKeypoint.new(0, Color3.fromRGB(12, 15, 35)),
-    ColorSequenceKeypoint.new(1, Color3.fromRGB(5, 8, 25))
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(18, 22, 48)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(9, 11, 27))
 }
-gradient.Rotation = 45
+gradient.Rotation = 90
 
--- Floating Particles (mejorados)
-for i = 1, 18 do
-    local particle = Instance.new("Frame", frame)
-    particle.Size = UDim2.new(0, math.random(3,6), 0, math.random(3,6))
-    particle.BackgroundColor3 = Color3.fromHSV(math.random(), 1, 1)
-    particle.BackgroundTransparency = 0.6
-    Instance.new("UICorner", particle).CornerRadius = UDim.new(1,0)
-    
-    task.spawn(function()
-        while true do
-            particle.Position = UDim2.new(math.random(-20,120)/100, 0, 1.1, 0)
-            particle.BackgroundTransparency = 0.6
-            
-            TweenService:Create(particle, TweenInfo.new(math.random(4,7), Enum.EasingStyle.Linear), {
-                Position = UDim2.new(math.random(-20,120)/100, 0, -0.2, 0),
-                BackgroundTransparency = 1
-            }):Play()
-            
-            task.wait(math.random(1,3))
-        end
-    end)
-end
-
--- Título con Glow
+-- Título
 local title = Instance.new("TextLabel", frame)
-title.Size = UDim2.new(1, -70, 0, 40)
-title.Position = UDim2.new(0, 15, 0, 8)
+title.Size = UDim2.new(1, -90, 0, 42)
+title.Position = UDim2.new(0, 18, 0, 10)
 title.BackgroundTransparency = 1
 title.Text = "⚡ MUÑOZ NEXUS"
-title.TextColor3 = Color3.fromRGB(0, 255, 255)
+title.TextColor3 = Color3.fromRGB(255, 255, 255)
 title.Font = Enum.Font.Arcade
-title.TextSize = 20
+title.TextSize = 22
 title.TextXAlignment = Enum.TextXAlignment.Left
 
-local titleGlow = Instance.new("UIStroke", title)
-titleGlow.Thickness = 1.5
-titleGlow.Color = Color3.fromRGB(0, 255, 255)
+local titleStroke = Instance.new("UIStroke", title)
+titleStroke.Thickness = 2
+titleStroke.Color = Color3.fromRGB(0, 255, 200)
 
--- Rainbow Title
-task.spawn(function()
-    local hue = 0
-    while task.wait(0.05) do
-        hue = (hue + 3) % 360
-        title.TextColor3 = Color3.fromHSV(hue/360, 1, 1)
-        titleGlow.Color = title.TextColor3
-    end
-end)
-
+-- Subtítulo
 local sub = Instance.new("TextLabel", frame)
-sub.Size = UDim2.new(1, -70, 0, 16)
-sub.Position = UDim2.new(0, 16, 0, 32)
-sub.Text = "Private Build • v1.2"
-sub.TextColor3 = Color3.fromRGB(140, 160, 200)
+sub.Size = UDim2.new(1, -90, 0, 18)
+sub.Position = UDim2.new(0, 20, 0, 38)
+sub.Text = "Private Build • v1.3"
+sub.TextColor3 = Color3.fromRGB(170, 210, 255)
 sub.BackgroundTransparency = 1
 sub.Font = Enum.Font.GothamMedium
-sub.TextSize = 11
+sub.TextSize = 12
 sub.TextXAlignment = Enum.TextXAlignment.Left
 
--- Botones superiores
-local function topBtn(txt, posX)
-    local b = Instance.new("TextButton", frame)
-    b.Size = UDim2.new(0, 28, 0, 28)
-    b.Position = UDim2.new(1, posX, 0, 8)
-    b.Text = txt
-    b.BackgroundColor3 = Color3.fromRGB(15, 20, 40)
-    b.TextColor3 = Color3.new(1,1,1)
-    b.Font = Enum.Font.GothamBold
-    b.TextSize = 14
-    Instance.new("UICorner", b).CornerRadius = UDim.new(0,8)
+-- Botones superiores (sin fondo rectangular)
+local function createTopButton(text, xOffset)
+    local btn = Instance.new("TextButton", frame)
+    btn.Size = UDim2.new(0, 32, 0, 32)
+    btn.Position = UDim2.new(1, xOffset, 0, 8)
+    btn.Text = text
+    btn.BackgroundTransparency = 1
+    btn.TextColor3 = Color3.fromRGB(200, 220, 255)
+    btn.Font = Enum.Font.GothamBold
+    btn.TextSize = 18
     
-    local stroke = Instance.new("UIStroke", b)
+    local stroke = Instance.new("UIStroke", btn)
     stroke.Thickness = 1.5
+    stroke.Color = Color3.fromRGB(80, 100, 140)
     
-    b.MouseEnter:Connect(function()
-        TweenService:Create(b, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(0, 200, 255)}):Play()
-        TweenService:Create(stroke, TweenInfo.new(0.2), {Color = Color3.fromRGB(255,255,255)}):Play()
+    btn.MouseEnter:Connect(function()
+        TweenService:Create(btn, TweenInfo.new(0.15), {TextColor3 = Color3.fromRGB(0, 255, 200)}):Play()
+        TweenService:Create(stroke, TweenInfo.new(0.15), {Color = Color3.fromRGB(0, 255, 200)}):Play()
     end)
     
-    b.MouseLeave:Connect(function()
-        TweenService:Create(b, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(15,20,40)}):Play()
-        TweenService:Create(stroke, TweenInfo.new(0.2), {Color = Color3.fromRGB(80,80,100)}):Play()
+    btn.MouseLeave:Connect(function()
+        TweenService:Create(btn, TweenInfo.new(0.15), {TextColor3 = Color3.fromRGB(200, 220, 255)}):Play()
+        TweenService:Create(stroke, TweenInfo.new(0.15), {Color = Color3.fromRGB(80, 100, 140)}):Play()
     end)
     
-    return b
+    return btn
 end
 
-local close = topBtn("✕", -38)
-local hide = topBtn("−", -72)
+local minimizeBtn = createTopButton("−", -48)
+local closeBtn = createTopButton("✕", -85)
 
--- Minimizar
-local circle = Instance.new("TextButton", gui)
-circle.Size = UDim2.new(0, 60, 0, 60)
-circle.Position = UDim2.new(0.1, 0, 0.5, 0)
-circle.Visible = false
-circle.Text = "⚡"
-circle.BackgroundColor3 = Color3.fromRGB(10, 15, 35)
-circle.TextColor3 = Color3.fromRGB(0, 255, 255)
-circle.TextSize = 28
-circle.Draggable = true
-Instance.new("UICorner", circle).CornerRadius = UDim.new(1,0)
-
-local circleStroke = Instance.new("UIStroke", circle)
-circleStroke.Thickness = 3
-
-task.spawn(function()
-    local h = 0
-    while task.wait() do
-        h = (h + 2) % 360
-        circleStroke.Color = Color3.fromHSV(h/360, 1, 1)
-    end
-end)
-
--- Toggles Mejorados
-local function createToggle(name, y)
+-- Toggle Function
+local function createToggle(name, yPos)
     local holder = Instance.new("Frame", frame)
-    holder.Size = UDim2.new(1, -24, 0, 36)
-    holder.Position = UDim2.new(0, 12, 0, y)
-    holder.BackgroundColor3 = Color3.fromRGB(15, 18, 38)
-    Instance.new("UICorner", holder).CornerRadius = UDim.new(0,10)
-    
+    holder.Size = UDim2.new(1, -28, 0, 42)
+    holder.Position = UDim2.new(0, 14, 0, yPos)
+    holder.BackgroundColor3 = Color3.fromRGB(20, 24, 48)
+    Instance.new("UICorner", holder).CornerRadius = UDim.new(0, 12)
+
     local label = Instance.new("TextLabel", holder)
-    label.Size = UDim2.new(0.65, 0, 1, 0)
-    label.Position = UDim2.new(0, 14, 0, 0)
+    label.Size = UDim2.new(0.68, 0, 1, 0)
+    label.Position = UDim2.new(0, 16, 0, 0)
     label.Text = name
-    label.TextColor3 = Color3.new(1,1,1)
+    label.TextColor3 = Color3.fromRGB(235, 240, 255)
     label.BackgroundTransparency = 1
     label.Font = Enum.Font.GothamSemibold
-    label.TextSize = 14
+    label.TextSize = 15
     label.TextXAlignment = Enum.TextXAlignment.Left
-    
-    local toggle = Instance.new("TextButton", holder)
-    toggle.Size = UDim2.new(0, 48, 0, 22)
-    toggle.Position = UDim2.new(1, -58, 0.5, -11)
-    toggle.BackgroundColor3 = Color3.fromRGB(50, 55, 80)
-    toggle.Text = ""
-    Instance.new("UICorner", toggle).CornerRadius = UDim.new(1,0)
-    
-    local knob = Instance.new("Frame", toggle)
-    knob.Size = UDim2.new(0, 18, 0, 18)
-    knob.Position = UDim2.new(0, 2, 0.5, -9)
-    knob.BackgroundColor3 = Color3.fromRGB(200, 200, 200)
+
+    local toggleBtn = Instance.new("TextButton", holder)
+    toggleBtn.Size = UDim2.new(0, 52, 0, 26)
+    toggleBtn.Position = UDim2.new(1, -68, 0.5, -13)
+    toggleBtn.BackgroundColor3 = Color3.fromRGB(45, 50, 75)
+    toggleBtn.Text = ""
+    Instance.new("UICorner", toggleBtn).CornerRadius = UDim.new(1, 0)
+
+    local knob = Instance.new("Frame", toggleBtn)
+    knob.Size = UDim2.new(0, 22, 0, 22)
+    knob.Position = UDim2.new(0, 2, 0.5, -11)
+    knob.BackgroundColor3 = Color3.fromRGB(220, 220, 230)
     Instance.new("UICorner", knob).CornerRadius = UDim.new(1,0)
-    
-    local state = false
-    
-    toggle.MouseButton1Click:Connect(function()
-        state = not state
-        
+
+    local enabled = false
+
+    toggleBtn.MouseButton1Click:Connect(function()
+        enabled = not enabled
         TweenService:Create(knob, TweenInfo.new(0.25, Enum.EasingStyle.Quint), {
-            Position = state and UDim2.new(1, -20, 0.5, -9) or UDim2.new(0, 2, 0.5, -9)
+            Position = enabled and UDim2.new(1, -24, 0.5, -11) or UDim2.new(0, 2, 0.5, -11)
         }):Play()
         
-        TweenService:Create(toggle, TweenInfo.new(0.25, Enum.EasingStyle.Quint), {
-            BackgroundColor3 = state and Color3.fromRGB(0, 255, 170) or Color3.fromRGB(50,55,80)
+        TweenService:Create(toggleBtn, TweenInfo.new(0.25, Enum.EasingStyle.Quint), {
+            BackgroundColor3 = enabled and Color3.fromRGB(0, 255, 170) or Color3.fromRGB(45,50,75)
         }):Play()
     end)
-    
-    return function() return state end
+
+    return function() return enabled end
 end
 
-local autoBuild   = createToggle("Auto Construir", 55)
-local autoUpgrade = createToggle("Auto Mejorar", 95)
-local autoSell    = createToggle("Auto Vender", 135)
-local attackBase  = createToggle("Eliminar Otras Bases", 175)
-local helpBase    = createToggle("Mejorar Otras Bases", 215)
+-- Toggles
+local autoBuild   = createToggle("Auto Construir", 68)
+local autoUpgrade = createToggle("Auto Mejorar", 115)
+local autoSell    = createToggle("Auto Vender", 162)
+local attackBase  = createToggle("Eliminar Otras Bases", 209)
+local helpBase    = createToggle("Mejorar Otras Bases", 256)
 
--- Cerrar y Minimizar
-close.MouseButton1Click:Connect(function() gui:Destroy() end)
+-- Funcionalidad botones
+closeBtn.MouseButton1Click:Connect(function()
+    gui:Destroy()
+end)
 
-hide.MouseButton1Click:Connect(function()
+minimizeBtn.MouseButton1Click:Connect(function()
     frame.Visible = false
-    circle.Visible = true
+    -- Puedes agregar un botón de restaurar después si quieres
 end)
 
-circle.MouseButton1Click:Connect(function()
-    frame.Visible = true
-    circle.Visible = false
-end)
-
--- ==================== MAIN LOOP ====================
+-- ==================== LOOP ====================
 task.spawn(function()
     while true do
-        task.wait(0.6) -- Más rápido pero controlado
-        
+        task.wait(0.5)
         if not myBase then continue end
-        
+
         if currentID and autoBuild() then
             for _, tile in pairs(myBase.Tiles:GetDescendants()) do
                 if tile:IsA("Part") and #tile:GetChildren() == 0 then
@@ -287,14 +214,14 @@ task.spawn(function()
                 end
             end
         end
-        
+
         for _, obj in pairs(myBase:GetDescendants()) do
             if obj:IsA("Model") then
                 if autoUpgrade() then remoteUpgrade:FireServer("upgrade", obj) end
                 if autoSell() then remoteUpgrade:FireServer("sell", obj) end
             end
         end
-        
+
         for _, base in pairs(workspace.Bases:GetChildren()) do
             if base ~= myBase then
                 for _, obj in pairs(base:GetDescendants()) do
