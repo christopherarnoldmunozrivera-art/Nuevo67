@@ -90,10 +90,32 @@ end)
 -- PARTICULAS
 for i = 1,12 do
     local dot = Instance.new("Frame", frame)
-    dot.Size = UDim2.new(0,3,0,3)
+    local size = math.random(2,6)
+dot.Size = UDim2.new(0,size,0,size)
     dot.BackgroundColor3 = Color3.fromRGB(0,200,255)
+task.spawn(function()
+	while dot.Parent do
+		dot.BackgroundColor3 = Color3.fromRGB(0,255,255)
+		task.wait(0.4)
+
+		dot.BackgroundColor3 = Color3.fromRGB(0,100,255)
+		task.wait(0.4)
+
+		dot.BackgroundColor3 = Color3.fromRGB(180,0,255)
+		task.wait(0.4)
+
+		dot.BackgroundColor3 = Color3.fromRGB(255,0,180)
+		task.wait(0.4)
+	end
+end)
+
     dot.BackgroundTransparency = 0.3
     Instance.new("UICorner", dot)
+local glow = Instance.new("UIStroke")
+glow.Parent = dot
+glow.Thickness = 1
+glow.Transparency = 0.5
+
 
     task.spawn(function()
         while true do
@@ -113,11 +135,27 @@ local title = Instance.new("TextLabel", frame)
 title.Size = UDim2.new(1,-60,0,30)
 title.Position = UDim2.new(0,10,0,0)
 title.Text = "⚡ MUÑOZ NEXUS"
+local orb = Instance.new("Frame", frame)
+orb.Size = UDim2.new(0,8,0,8)
+orb.Position = UDim2.new(0,5,0,12)
+orb.BackgroundColor3 = Color3.fromRGB(0,255,255)
+orb.BackgroundTransparency = 0.2
+
+Instance.new("UICorner", orb).CornerRadius = UDim.new(1,0)
+
 title.TextColor3 = Color3.fromRGB(0,220,255)
 title.BackgroundTransparency = 1
 title.Font = Enum.Font.GothamBlack
 title.TextSize = 16
 title.TextXAlignment = Enum.TextXAlignment.Left
+local orb = Instance.new("Frame", frame)
+orb.Size = UDim2.new(0,8,0,8)
+orb.Position = UDim2.new(0,5,0,12)
+orb.BackgroundColor3 = Color3.fromRGB(0,255,255)
+orb.BackgroundTransparency = 0.2
+
+Instance.new("UICorner", orb).CornerRadius = UDim.new(1,0)
+
 task.spawn(function()
 	while true do
 		TweenService:Create(title,TweenInfo.new(0.8),{
@@ -139,6 +177,19 @@ task.spawn(function()
 			TextColor3 = Color3.fromRGB(255,0,180)
 		}):Play()
 		task.wait(0.8)
+	end
+end)
+task.spawn(function()
+	while true do
+		TweenService:Create(orb,TweenInfo.new(1),{
+			Size = UDim2.new(0,14,0,14),
+			BackgroundTransparency = 0.8
+		}):Play()
+
+		task.wait(1)
+
+		orb.Size = UDim2.new(0,8,0,8)
+		orb.BackgroundTransparency = 0.2
 	end
 end)
 
@@ -256,35 +307,15 @@ local function createToggle(name, y)
         TweenService:Create(toggleBtn, TweenInfo.new(0.2), {
             BackgroundColor3 = state and Color3.fromRGB(0,170,255) or Color3.fromRGB(60,70,100)
         }):Play()
-if state then
-task.spawn(function()
-while state do
-knob.BackgroundColor3 = Color3.fromRGB(0,255,255)
-toggleBtn.BackgroundColor3 = Color3.fromRGB(0,255,255)
-task.wait(0.15)
+TweenService:Create(label, TweenInfo.new(0.2), {
+    TextColor3 = state
+        and Color3.fromRGB(0,255,255)
+        or Color3.fromRGB(255,255,255)
+}):Play()
 
-knob.BackgroundColor3 = Color3.fromRGB(0,100,255)
-toggleBtn.BackgroundColor3 = Color3.fromRGB(0,100,255)
-task.wait(0.15)
-
-knob.BackgroundColor3 = Color3.fromRGB(180,0,255)
-toggleBtn.BackgroundColor3 = Color3.fromRGB(180,0,255)
-task.wait(0.15)
-
-knob.BackgroundColor3 = Color3.fromRGB(255,0,180)
-toggleBtn.BackgroundColor3 = Color3.fromRGB(255,0,180)
-task.wait(0.15)
-end
-
-knob.BackgroundColor3 = Color3.fromRGB(0,200,255)
-toggleBtn.BackgroundColor3 = Color3.fromRGB(60,70,100)
-end)
-end
-
-    end)
-
-    return function() return state end
-end
+knob.BackgroundColor3 = state
+    and Color3.fromRGB(0,255,255)
+    or Color3.fromRGB(180,180,180)
 
 local autoBuild = createToggle("Auto Construir", 45)
 local upgradeOn = createToggle("Auto Mejorar", 80)
