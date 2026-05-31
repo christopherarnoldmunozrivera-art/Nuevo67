@@ -52,7 +52,7 @@ local myBase = getMyBase()
 local gui = Instance.new("ScreenGui", game.CoreGui)
 
 local frame = Instance.new("Frame", gui)
-frame.Size = UDim2.new(0,300,0,360)
+frame.Size = UDim2.new(0,300,0,260)
 frame.Position = UDim2.new(0.7,0,0.3,0)
 frame.BackgroundColor3 = Color3.fromRGB(8,10,20)
 frame.Active = true
@@ -110,39 +110,41 @@ end
 
 -- TITULO
 local title = Instance.new("TextLabel", frame)
-title.Size = UDim2.new(1,-30,0,35)
-title.Position = UDim2.new(0,15,0,5)
-title.Text = "◢ MUÑOZ NEXUS ◣"
+title.Size = UDim2.new(1,-60,0,30)
+title.Position = UDim2.new(0,10,0,0)
+title.Text = "⚡ MUÑOZ NEXUS"
 title.TextColor3 = Color3.fromRGB(0,220,255)
 title.BackgroundTransparency = 1
 title.Font = Enum.Font.GothamBlack
-title.TextSize = 18
+title.TextSize = 16
 title.TextXAlignment = Enum.TextXAlignment.Left
+task.spawn(function()
+	while true do
+		title.TextColor3 = Color3.fromRGB(0,255,255)
+		task.wait(1)
 
--- SUBTITULO
+		title.TextColor3 = Color3.fromRGB(0,100,255)
+		task.wait(1)
+
+		title.TextColor3 = Color3.fromRGB(180,0,255)
+		task.wait(1)
+
+		title.TextColor3 = Color3.fromRGB(255,0,180)
+		task.wait(1)
+	end
+end)
+
+
+-- SUBTEXTO
 local sub = Instance.new("TextLabel", frame)
-sub.Size = UDim2.new(1,-30,0,18)
-sub.Position = UDim2.new(0,15,0,25)
-sub.Text = "Neural Automation System"
-sub.TextColor3 = Color3.fromRGB(150,170,255)
+sub.Size = UDim2.new(1,-60,0,15)
+sub.Position = UDim2.new(0,10,0,22)
+sub.Text = "Private Build v1.0"
+sub.TextColor3 = Color3.fromRGB(120,140,180)
 sub.BackgroundTransparency = 1
 sub.Font = Enum.Font.GothamMedium
 sub.TextSize = 11
 sub.TextXAlignment = Enum.TextXAlignment.Left
-
--- SEPARADOR PREMIUM
-local line = Instance.new("Frame", frame)
-line.Size = UDim2.new(1,-30,0,1)
-line.Position = UDim2.new(0,15,0,45)
-line.BackgroundColor3 = Color3.fromRGB(0,220,255)
-line.BorderSizePixel = 0
-
-local lineGlow = Instance.new("UIGradient", line)
-lineGlow.Color = ColorSequence.new{
-    ColorSequenceKeypoint.new(0, Color3.fromRGB(0,220,255)),
-    ColorSequenceKeypoint.new(0.5, Color3.fromRGB(180,0,255)),
-    ColorSequenceKeypoint.new(1, Color3.fromRGB(0,220,255))
-}
 
 -- BOTONES
 local function topBtn(txt, x)
@@ -176,10 +178,10 @@ local hide = topBtn("-", -55)
 local circle = Instance.new("TextButton", gui)
 circle.Size = UDim2.new(0,55,0,55)
 circle.Position = UDim2.new(0.1,0,0.5,0)
-circle.Text = "NX"
+circle.Text = "⚡"
 circle.Visible = false
 circle.BackgroundColor3 = Color3.fromRGB(15,20,35)
-circle.TextColor3 = Color3.fromRGB(180,0,255)
+circle.TextColor3 = Color3.fromRGB(0,200,255)
 circle.Draggable = true
 Instance.new("UICorner", circle).CornerRadius = UDim.new(1,0)
 
@@ -212,7 +214,7 @@ local function createToggle(name, y)
     label.TextColor3 = Color3.new(1,1,1)
     label.BackgroundTransparency = 1
     label.Font = Enum.Font.GothamSemibold
-    label.TextSize = 14
+    label.TextSize = 13
 
     local toggleBtn = Instance.new("TextButton", holder)
     toggleBtn.Size = UDim2.new(0,40,0,18)
@@ -244,11 +246,11 @@ local function createToggle(name, y)
     return function() return state end
 end
 
-local autoBuild = createToggle("Auto Construir", 60)
-local upgradeOn = createToggle("Auto Mejorar", 100)
-local sellOn = createToggle("Auto Vender", 140)
-local attackOthers = createToggle("Eliminar Otras Bases", 180)
-local helpOthers = createToggle("Mejorar Otras Bases", 220)
+local autoBuild = createToggle("Auto Construir", 45)
+local upgradeOn = createToggle("Auto Mejorar", 80)
+local sellOn = createToggle("Auto Vender", 115)
+local attackOthers = createToggle("Eliminar Otras Bases", 150)
+local helpOthers = createToggle("Mejorar Otras Bases", 185)
 
 -- LOOP
 task.spawn(function()
