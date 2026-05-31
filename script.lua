@@ -291,6 +291,58 @@ local upgradeOn = createToggle("Auto Mejorar", 80)
 local sellOn = createToggle("Auto Vender", 115)
 local attackOthers = createToggle("Eliminar Otras Bases", 150)
 local helpOthers = createToggle("Mejorar Otras Bases", 185)
+-- CRONÓMETRO
+local timerLabel = Instance.new("TextLabel", frame)
+timerLabel.Size = UDim2.new(1,0,0,25)
+timerLabel.Position = UDim2.new(0,0,1,-35)
+timerLabel.BackgroundTransparency = 1
+timerLabel.Text = "Tiempo: 00:00:00"
+timerLabel.Font = Enum.Font.GothamBold
+timerLabel.TextSize = 14
+timerLabel.TextColor3 = Color3.fromRGB(0,255,255)
+
+local startTime = tick()
+
+task.spawn(function()
+	while true do
+		local elapsed = math.floor(tick() - startTime)
+
+		local h = math.floor(elapsed / 3600)
+		local m = math.floor((elapsed % 3600) / 60)
+		local s = elapsed % 60
+
+		timerLabel.Text = string.format(
+			"Tiempo: %02d:%02d:%02d",
+			h,m,s
+		)
+
+		task.wait(1)
+	end
+end)
+
+task.spawn(function()
+	while true do
+		TweenService:Create(timerLabel,TweenInfo.new(0.8),{
+			TextColor3 = Color3.fromRGB(0,255,255)
+		}):Play()
+		task.wait(0.8)
+
+		TweenService:Create(timerLabel,TweenInfo.new(0.8),{
+			TextColor3 = Color3.fromRGB(0,100,255)
+		}):Play()
+		task.wait(0.8)
+
+		TweenService:Create(timerLabel,TweenInfo.new(0.8),{
+			TextColor3 = Color3.fromRGB(180,0,255)
+		}):Play()
+		task.wait(0.8)
+
+		TweenService:Create(timerLabel,TweenInfo.new(0.8),{
+			TextColor3 = Color3.fromRGB(255,0,180)
+		}):Play()
+		task.wait(0.8)
+	end
+end)
 
 -- LOOP
 task.spawn(function()
